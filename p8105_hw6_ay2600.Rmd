@@ -12,6 +12,7 @@ library(rnoaa)
 library(dplyr)
 library(modelr)
 library(purrr)
+library(skimr)
 
 knitr::opts_chunk$set(
 	echo = TRUE,
@@ -149,3 +150,34 @@ bootstrap_log_values %>%
 ### Plot Description
 
 - This plot displays the density of the logarithm of the product of two regression coefficients,\(\beta_{tmin}\) and \(\beta_{prcp}\). This distribution seems fairly symmetrical and bell-shaped, centering around 2.10, indicating that the log-transformed product of the coefficients varies less and is more consistent across bootstrap samples compared to the \(R^2\) values.
+
+## Problem 3
+
+### Load/tidy the `birthweight.csv` and convert factors
+
+```{r}
+birthweight_data =
+  read_csv("data/birthweight.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(
+    babysex = factor(babysex, levels = c(1, 2), labels = c("Male", "Female")),
+    frace = factor(frace, levels = c(1, 2, 3, 4, 8, 9), labels = c("White", "Black", "Asian", "Puerto Rican", "Other", "Unknown")),
+    mrace = factor(mrace, levels = c(1, 2, 3, 4, 8), labels = c("White", "Black", "Asian", "Puerto Rican", "Other")),
+    malform = factor(malform, levels = c(0, 1), labels = c("Absent", "Present"))
+  )
+
+# Check for missing datas
+
+skimr::skim(birthweight_data)
+```
+
+- According to the `skim()` summary statistics, there's no missing data.
+
+### Regression Models for `birthweight_data`
+
+
+
+
+
+
+
