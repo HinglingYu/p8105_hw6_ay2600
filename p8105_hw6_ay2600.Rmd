@@ -109,4 +109,24 @@ bootstrap_data %>%
   )
 ```
 
+### Confidence interval for $\log(\hat{\beta}_1 \ast \hat{\beta}_2)$
+
+```{r}
+bootstrap_log_values = 
+  bootstrap_data %>% 
+  mutate(
+    log_beta_product = log(beta_0 * beta_1)
+  )
+
+# Confidence interval log_beta
+log_beta_ci = 
+  bootstrap_log_values %>%
+  select(log_beta_product) %>% 
+  summarize(
+    ci_lower = quantile(log_beta_product, 0.025),
+    ci_upper = quantile(log_beta_product, 0.975)
+  )
+
+log_beta_ci
+```
 
