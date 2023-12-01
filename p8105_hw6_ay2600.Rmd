@@ -1,0 +1,66 @@
+---
+title: "Data Science I HW 6"
+author: "Hingling Yu"
+date: "2023-11-29"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(patchwork)
+library(rnoaa)
+library(dplyr)
+library(modelr)
+library(purrr)
+
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE
+)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+
+```
+
+
+## Problem 2
+### Fetching and preparing weather data
+```{r}
+weather_df = 
+  rnoaa::meteo_pull_monitors(
+    c("USW00094728"),
+    var = c("PRCP", "TMIN", "TMAX"), 
+    date_min = "2022-01-01",
+    date_max = "2022-12-31") |>
+  mutate(
+    name = recode(id, USW00094728 = "CentralPark_NY"),
+    tmin = tmin / 10,
+    tmax = tmax / 10) |>
+  select(name, id, everything())
+
+```
+
+### Create bootstrap function 
+
+```{r}
+set.seed(2)
+sample_bootstrap = 
+  function(data_frame) {
+    data_frame %>% sample_frac(replace = TRUE)
+  }
+
+```
+
+
+
+
+
+
