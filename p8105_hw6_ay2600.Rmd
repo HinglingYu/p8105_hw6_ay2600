@@ -96,7 +96,6 @@ r_squared_ci =
 r_squared_ci
 ```
 ### Plotting distribution of $\hat{r}^2$
-
 ```{r}
 bootstrap_data %>%
   select(r.squared) %>%
@@ -128,5 +127,18 @@ log_beta_ci =
   )
 
 log_beta_ci
+```
+
+### Plot distribution for log(beta_0 * beta_1)
+```{r}
+bootstrap_log_values %>%
+  select(log_beta_product) %>%
+  ggplot(aes(x = log_beta_product)) + 
+  geom_density(fill = "lightblue", color = "black") + 
+  labs(
+    title = "Density of Log Beta Product Bootstrap Estimates",
+    x = "Log Product Estimate",
+    y = "Density"
+  )
 ```
 
