@@ -240,7 +240,7 @@ cv_df %>%
 
 ```
 
-- From the plot, the model 3 can best predict the birthweight sicne it has the lowest RMSE value.
+- Lower RMSE values represents better regression model. According to this the plot, model 3 can best predict the birthweight sicne it has the lowest RMSE value.
 
 
 
