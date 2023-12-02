@@ -181,6 +181,28 @@ summary(model1)
 ```
 
 
+### Predictions and residuals
+```{r}
+# Add predictions and residuals to the dataset
+birthweight_data_pr = 
+  birthweight_data %>%
+  add_predictions(model1, var = "predicted") %>%
+  add_residuals(model1, var = "residuals")
+
+# ggplot
+birthweight_data_pr %>% 
+  ggplot(aes(x = predicted, y = residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  labs(
+    title = "Residuals vs Fitted Values",
+    x = "Fitted Values (Predicted Birth Weight)",
+    y = "Residuals (Observed - Predicted)"
+  )
+
+```
+
+- In our analysis, we developed a linear regression model to predict birthweight, focusing on key variables like gestational age, mother’s pre-pregnancy BMI, mother’s age, smoking during pregnancy, and weight gain during pregnancy. These predictors were selected based on a hypothesized structure using known medical insights. 
 
 
 
