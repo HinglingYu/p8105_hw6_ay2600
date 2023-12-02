@@ -173,7 +173,21 @@ skimr::skim(birthweight_data)
 
 - According to the `skim()` summary statistics, there's no missing data.
 
+
 ### Regression Models for `birthweight_data`
+```{r}
+model1 <- lm(bwt ~ gaweeks + ppbmi + momage + smoken + wtgain, data = birthweight_data)
+summary(model1)
+```
+
+
+
+
+
+
+
+
+
 
 
 
