@@ -206,10 +206,41 @@ birthweight_data_pr %>%
 
 
 
+### Comparation using cross-validated prediction error
+```{r}
+# Cross-validate
+cv_df <- crossv_mc(birthweight_data, 100) %>% 
+  mutate(
+    train = map(train, as_tibble),
+    test = map(test, as_tibble))
 
+# Fit models
+cv_df <- cv_df %>% 
+  mutate(
+    my_model = map(train, ~lm(bwt ~ gaweeks + ppbmi + momage + smoken + wtgain, data = .x)),
+    model2 = map(train, ~lm(bwt ~ blength + gaweeks, data = .x)),
+    model3 = map(train, ~lm(bwt ~ bhead * blength * babysex, data = .x))) %>% 
+  mutate(
+    rmse_my_model = map2_dbl(my_model, test, ~rmse(model = .x, data = .y)),
+    rmse_model2 = map2_dbl(model2, test, ~rmse(model = .x, data = .y)),
+    rmse_model3 = map2_dbl(model3, test, ~rmse(model = .x, data = .y)))
 
+# Plot
+cv_df %>% 
+  select(starts_with("rmse")) %>% 
+  pivot_longer(
+    everything(),
+    names_to = "model", 
+    values_to = "rmse",
+    names_prefix = "rmse_") %>% 
+  mutate(model = fct_inorder(model)) %>% 
+  ggplot(aes(x = model, y = rmse, fill = model)) + 
+  geom_violin() +
+  scale_fill_brewer(palette = "Pastel1")
 
+```
 
+- From the plot, the model 3 can best predict the birthweight sicne it has the lowest RMSE value.
 
 
 
